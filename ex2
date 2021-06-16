@@ -1,0 +1,101 @@
+#include <iostream>
+#include <conio.h>
+#include <string.h>
+#include <iomanip>
+using namespace std;
+#define N 3
+
+struct note
+{
+    char name[100];
+    char phone[50];
+    int date[3];
+} info[8];   //структура
+
+//сортировка
+void Sort(void)
+{
+    setlocale(0, "Rus");
+    int i, k, Date1, Date2;
+    k = N - 1;
+    bool fs = true;
+    while (fs)
+    {
+        fs = false;
+        for (i = 0; i < k; i++)
+        {
+            Date1 = info[i].date[2] * 10000 + info[i].date[1] * 100 + info[i].date[0];
+            Date2 = info[i + 1].date[2] * 10000 + info[i + 1].date[1] * 100 + info[i + 1].date[0];
+            if (Date1 < Date2)
+            {
+                struct note Tmp;
+                Tmp = info[i];
+                info[i] = info[i + 1];
+                info[i + 1] = Tmp;
+                fs = true;
+            }
+        }
+        k--;
+        if (k < 0) fs = false;
+    }
+}
+
+int main(void) {
+    setlocale(0, "Rus");
+    int i, j;
+    char phone[50];
+    //Ввод данных
+    for (i = 0; i < N; ++i)
+    {
+        cout << "\n\t---- " << i + 1 << " ---\nИмя :";
+        cin.ignore();
+        cin.get(info[i].name, 100);
+        cout << "Номер телефона :";
+        cin.ignore();
+        cin.get(info[i].phone, 50);
+        cout << "Дата :\nЧисло >> ";
+        cin >> info[i].date[0];
+        cout << "Месяц >> ";
+        cin >> info[i].date[1];
+        cout << "Год >> ";
+        cin >> info[i].date[2];
+    }
+    Sort();
+    //Вывод на экран.
+
+    for (i = 0; i < N; ++i) {
+        cout << "\n----------------------------------------------\n";
+        cout << "Имя : " << setw(20) << info[i].name << endl
+            << "Телефон: " << setw(20) << info[i].phone << endl
+            << "Дата рождения :" << endl
+            << setw(30) << "День  >> " << info[i].date[0] << endl
+            << setw(30) << "Месяц >> " << info[i].date[1] << endl
+            << setw(30) << "Год   >> " << info[i].date[2] << endl;
+    }
+    //Выбор по номеру телефона.
+    cout << "Введите номер телефона :";
+    cin.ignore();
+    cin.get(phone, 50);
+    for (i = 0, j = 0; i < N; i++)
+        if (strcmp(info[i].phone, phone) == 0)
+            ++j;
+    if (j > 0) {
+
+        cout << "\n----------------------------------------------\n";
+        for (i = 0; i < N; ++i) {
+            if (strcmp(info[i].phone, phone) == 0) {
+                cout << "Имя   " << setw(20) << info[i].name << endl
+                    << "Дата рождения :" << endl
+                    << setw(30) << "День  >> " << info[i].date[0] << endl
+                    << setw(30) << "Месяц >> " << info[i].date[1] << endl
+                    << setw(30) << "Год   >> " << info[i].date[2] << endl;
+            }
+            else continue;
+            cout << endl;
+        }
+    }
+    else
+        cout << "Номер " << phone << " Отсутствует в списке\n";
+    cout << "Press any key\n";
+    return 0;
+}
