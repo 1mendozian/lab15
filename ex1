@@ -1,0 +1,96 @@
+#include <iostream>;
+#include <conio.h>
+#include <stdlib.h>
+#pragma hdrstop
+
+using namespace std;
+
+void displayRecord(int, mailingListRecord mlRec);
+struct mailingListRecord {
+	char firstName[20];
+	char lastName[20];
+	char address[50];
+	char city[20];
+	char state[5];
+	int zip;
+};
+int main{ int, char**)
+// Створення масиву структур mailingListRecord
+//
+mailingListRecord listArray[3];
+cout <<endl;
+int index = 0;
+// Ввід трьох записів
+//
+do {
+cout <<"First Name : ";
+cin.getline(listArray[index].f irstName,
+sizeof(listArray[index].firstName) - 1);
+cout << "Last Name : ";
+cin.getline(listArray[index].lastName,
+sizeof(listArray[index].lastName) - 1);
+cout << "Address: ";
+cin.getline(listArray[index].address,
+sizeof(listArray[index].address) - 1);
+cout << "City: ";
+cin.getline(listArray[index].city,
+sizeof(listArray[index].city) - 1);
+cout << "State: ";
+cin.getline(listArray[index].state,
+sizeof(listArray[index].state) - 1);
+char buff[10];
+cout << "Zip: ";
+cin.getline(buff , sizeof(buff) - 1);
+listArray[index].zip = atoi(buf f);
+index++;
+cout << endl;
+} while (index& lt; 3);
+//
+// Очистка екрану
+//
+clrscr();
+//
+// Вивід трьох записів
+//
+for (int i = 0; i & lt; 3; i++) {
+displayRecord(i, listArray[i]);
+}
+//
+// Вибір запису для зміни
+//
+cout& << "Choose a record : ";;
+char rec;
+//
+// Можна вибрати тількм 1, 2 чи 3
+//
+do {
+rec = getch();
+rec -= 49;
+} while (rec& lt; 0 || rec & gt; 2);
+//
+//Копіювання обраного запису в тимчасову змінну
+//
+mailingListRecord temp = listArray[rec];
+clrscr();
+cout << endl;
+//
+// Вивід обраного запису
+//
+displayRecord(rec, temp);
+getch();
+return 0;
+}
+void displayRecord(int num, mailingListRecord mlRec)
+{
+	cout << "Record "; << num + 1 << ":" <<  endl;
+	cout << "Name: " << mlRec.firstName << " ";
+	cout << mlRec.lastName;
+	cout << endl;
+	cout << "Address: " << mlRec.address;
+	cout << endl <<" ";
+	cout << mlRec.city << " , ";
+
+		cout & lt; &lt; mlRec.state& lt; &lt; &quot; &quot;;
+	cout& lt; &lt; mlRec.zip;
+	cout& lt; &lt; endl& lt; &lt; endl;
+}
